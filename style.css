@@ -1,0 +1,324 @@
+@font-face {
+  font-family: "Shredded";
+  src: url("./shredded.ttf");
+}
+
+:root {
+  font-family: 'Shredded', Impact, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 15px;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #222222;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  -webkit-text-size-adjust: 100%;
+  /* --scrollbar-track-color: rgb(0, 177, 177);
+  --scrollbar-thumb-color:  linear-gradient(red, blue);
+  --scrollbar-thumb-hover-color: linear-gradient(rgb(182, 0, 0), rgb(0, 0, 182)); */
+}
+
+/* 
+//Only for chrome and safari (Has a lot better options)
+::-webkit-scrollbar {
+  width: 1em;   // Only for vertical scroll
+  height: 1em;  // Only for horizonal scroll
+  background: grey;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 100vw;
+  margin-block: .25em; // Used to push the scroll bar away from top/bottom
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+// Just for Firefox (Not as many options)(No border radius)
+@supports (scrollbar-color: blue) {
+  * {
+    scrollbar-color: var(--scrollbar-track-color) var(--scrollbar-track-color); // Track and Thumb colors are set on the same line
+    scrollbar-width: auto; // Limited options for width/height (auto thin none)
+  }
+} */
+
+body {
+  position: relative;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  overflow: hidden;
+}
+
+.shredded-font{
+  font-family: 'Shredded';
+}
+.progress-bar-container{
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  /* background: url('./textures/castle_brick_02_red_diff.jpg'), rgba(0, 0, 0, .7); */
+  background: rgba(0, 0, 0, .7);
+  /* background-blend-mode: darken; */
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+.loadingHeading{
+  align-self: center;
+  color: aqua;
+  font-size: 5rem;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: .001em;
+  text-shadow: 0px 0px 10px #f7df1eaa;
+  opacity: 1;
+}
+#progress-bar{
+  width: 40%;
+  margin-top: 0.5%;
+  height: 4%;
+}
+label{
+  color: white;
+  font-size: 2rem;  
+}
+
+canvas {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  z-index: 0;
+}
+
+#app {
+  position: absolute;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+.appContainer{
+  display: flex;
+  margin: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+#nav-menu{
+  position: fixed;
+  display: flex;
+  width: 100%;
+  top: 0;
+  background: #22222250;
+  flex-direction: row;
+  justify-content:space-evenly;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+h1, #heading {
+  margin: 5px;
+  padding: 5px;
+  color: greenyellow;
+  filter: drop-shadow(0 0 .25em #f7df1eaa);
+  font-size: 3rem;
+  line-height: 1.1;
+  letter-spacing: .001em;
+  opacity: .7;
+  align-self: flex-start;
+  user-select: none;
+  z-index: 100;
+}
+p{
+  margin-bottom: .5rem;
+}
+
+button, a{
+  touch-action: manipulation;
+}
+a{ text-decoration: none; }
+
+#app button, #app a {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  width: 100%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 0.4em .5em;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  font-family: Shredded, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgba(0, 0, 0, 0.904);
+  background: linear-gradient(#cecece, #f7de1ed7);
+  background: -webkit-linear-gradient(#cecece, #f7de1ed7);
+  background: -moz-linear-gradient(#cecece, #f7de1ed7);
+  filter: drop-shadow(0 0 .25em #f7df1eaa);
+  opacity: .75;
+  cursor: pointer;
+  will-change: border-color filter;
+  transition: border-color 0.25s;
+  transition: filter 300ms;
+  pointer-events: fill;
+  z-index: 200;
+}
+#app button:hover, #app a:hover {
+  border-color: #ffffff;
+  background: linear-gradient(#e2e2e2, #f7de1efb);
+  background: -webkit-linear-gradient(#e2e2e2, #f7de1efb);
+  background: -moz-linear-gradient(#e2e2e2, #f7de1efb);
+  filter: drop-shadow(0 0 1em #f7df1eaa);
+}
+#app button:focus,
+#app button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+#nav-menu button{
+  width: 120px;
+}
+#helpContainer{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: .05rem;
+  font-size: 1.5rem;
+  text-align: center;
+  user-select: none;
+  margin: auto;
+  width: 75%;
+  max-height: 90%;
+  padding: 10px;
+  border-radius: 15px;
+  border: black 3px solid;
+  color: white;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  box-shadow: 0.0em 0.0em 2.5em rgba(172, 255, 47, 0.5);
+  opacity: 0;
+  transition: opacity .5s;
+  z-index: 500;
+}
+#helpContainer h2{
+  color: greenyellow;
+  margin-bottom: 1rem;
+}
+#helpContainer .content{
+  background: #7a7a7ab6;
+  border-radius: 15px;
+  color: white;
+  padding: .5rem;
+  margin: .5rem 0;
+}
+#helpContainer button, #helpContainer a{
+  display: inline-block;
+  width: 120px;
+  opacity: .9;
+  pointer-events: inherit;
+}
+#helpContainer img{
+  max-width: 100%;
+  max-height: 80vh;
+}
+
+#help-close-button{
+  border-radius: 50% !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  cursor: pointer !important;
+  grid-area: endofrow;
+  margin-left: auto;
+}
+.help-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  margin: 0;
+  padding: 2rem;
+}
+
+.help-heading{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  grid-template-areas: 
+    ". header endofrow";
+  width: 100%;
+}
+.help-heading h1, .help-heading h2{
+  grid-area: header;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+@media(max-width: 900px) {
+  :root {
+    font-size: 10px;
+  }
+  #nav-menu{
+    flex-wrap: wrap;
+  }
+  #nav-menu #heading{
+    flex-basis: 100%;
+  }
+  #nav-menu button{
+    width: 90px;
+  }
+  .appContainer{
+  flex-direction: column;
+  }
+  #helpContainer{
+    width: 95%;
+  }
+}
+@media(max-height: 570px) {
+  :root {
+    font-size: 10px;
+  }
+  #helpContainer{
+    width: 95%;
+  }
+}
