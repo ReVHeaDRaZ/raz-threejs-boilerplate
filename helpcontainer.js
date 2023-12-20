@@ -40,11 +40,11 @@ export function showIframe(src){
     <div class="help-wrapper">
     <div class="help-heading">
         <h2></h2>
-        <button id="photo-close-button"><i class="fa-solid fa-xmark fa-xl"></i></button>
+        <button id="help-close-button">X</button>
       </div>
       <iframe src="${src}" style="border:none;height:100vh;width:100%;"></iframe> 
     </div>
   `
   showHelp();
-  document.getElementById('photo-close-button').addEventListener("click", hideHelp);
+  document.getElementById('help-close-button').addEventListener("click", hideHelp);
 }
