@@ -1,7 +1,7 @@
-import * as THREE from 'three';
+import { PerspectiveCamera } from "three";
 
 export function setupCamera(positions){
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 300);
+  const camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 300);
   if(window.innerWidth < window.innerHeight){
     camera.fov = 85;
     camera.updateProjectionMatrix();

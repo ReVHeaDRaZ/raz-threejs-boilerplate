@@ -11,6 +11,7 @@ import { positions } from './positions.js';
 
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import { outlinePass, setupPostProcess } from './postprocess.js';
+import { createHelpContainer, helpContainerOpen, showHelp, hideHelp } from './helpcontainer.js';
 
 // Globals
 let fullOrbitControl = false; // For debugging scene with full camera control
@@ -19,7 +20,7 @@ let state = "home";
 let highQuality = true;
 let showStats = false;
 let helpContainerDOM, stats;
-let helpContainerOpen = false;
+
 
 gsap.defaults({
   ease: "power1.inOut",
@@ -65,26 +66,13 @@ loadingManager.onLoad = function(){
         <button id="settings-button">SETTINGS</button>
       </div>
 
-      <div id="helpContainer" style="overflow-y: scroll">
-        <div class=help-wrapper">
-          <div class="help-heading">
-            <h2>RaZ Three.js Boilerplate</h2>
-            <button id="help-close-button">X</button>
-          </div>
-          <div class="content">
-            <p>This is the helpContainer, can be used for information, menus, forms, etc.</p>
-          </div>
-        </div> 
-      </div>
-      
     </div> 
   `
-  helpContainerDOM = document.getElementById('helpContainer');
-  helpContainerDOM.style.opacity = 1;
-  helpContainerDOM.style.pointerEvents = "auto";
-  document.getElementById('help-close-button').addEventListener("click", hideHelp);
   document.getElementById("home-button").addEventListener("click", showHome);
   document.getElementById("settings-button").addEventListener("click", showSettings);
+
+  helpContainerDOM = createHelpContainer(document.querySelector('.appContainer'));
+  showHelp();
 
   animate();
   renderer.shadowMap.needsUpdate = true;
@@ -141,16 +129,6 @@ function intro(){
   showHome();
 }
 
-function hideHelp(){
-  helpContainerDOM.style.opacity = 0;
-  helpContainerDOM.style.pointerEvents = "none";
-  helpContainerOpen = false;
-}
-function showHelp(){
-  helpContainerDOM.style.opacity = "1";
-  helpContainerDOM.style.pointerEvents = "auto";
-  helpContainerOpen = true;
-}
 function showNav(){
   document.getElementById('nav-menu').style.opacity = "1";
 }
@@ -177,19 +155,7 @@ function showSettings(){
   document.getElementById('quality-button').addEventListener("click", changeQuality)
   document.getElementById('fps-button').addEventListener("click", showFPS);
 }
-function showIframe(src){
-  helpContainerDOM.innerHTML = `
-    <div class="help-wrapper">
-    <div class="help-heading">
-        <h2>FrogHollow</h2>
-        <button id="photo-close-button"><i class="fa-solid fa-xmark fa-xl"></i></button>
-      </div>
-      <iframe src="${src}" style="border:none;height:100vh;width:100%;" " title="FrogHollow webpage"></iframe> 
-    </div>
-  `
-  showHelp();
-  document.getElementById('photo-close-button').addEventListener("click", hideHelp);
-}
+
 
 // Events
 // mouse event vars
